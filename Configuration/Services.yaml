@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Passionweb\Webm\:
+    resource: '../Classes/*'
+
+  Passionweb\Webm\Service\WebmConverterService:
+    public: true
+
+  Passionweb\Webm\Hooks\DataHandlerHook:
+    public: true

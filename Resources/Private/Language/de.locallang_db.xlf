@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="EXT:webm/Resources/Private/Language/locallang_db.xlf" date="2022-10-12T13:12:24Z" product-name="webm">
+		<header/>
+		<body>
+		    <trans-unit id="tx_webm_domain_model_queueitem" resname="tx_webm_domain_model_queueitem">
+                <source>Queue item</source>
+                <target>Queue-Item</target>
+            </trans-unit>
+			<trans-unit id="tx_webm_domain_model_queueitem.tablenames" resname="tx_webm_domain_model_queueitem.tablenames">
+				<source>Field "tablenames" (sys_file_reference)</source>
+				<target>Feld "tablenames" (sys_file_reference)</target>
+			</trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.fieldname" resname="tx_webm_domain_model_queueitem.fieldname">
+                <source>Field "fieldname" (sys_file_reference)</source>
+                <target>Feld "fieldname" (sys_file_reference)</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.uid_foreign" resname="tx_webm_domain_model_queueitem.uid_foreign">
+                <source>Field "uid_foreign" (sys_file_reference)</source>
+                <target>Feld "uid_foreign" (sys_file_reference)</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.sys_file_uid" resname="tx_webm_domain_model_queueitem.sys_file_uid">
+                <source>Uid of original video (sys_file)</source>
+                <target>Uid des Original-Videos (sys_file)</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.status" resname="tx_webm_domain_model_queueitem.status">
+                <source>Status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.status_zero" resname="tx_webm_domain_model_queueitem.status_zero">
+                <source>in the queue</source>
+                <target>in der Warteschlange</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.status_one" resname="tx_webm_domain_model_queueitem.status_one">
+                <source>Original video not found</source>
+                <target>Original-Video nicht auffindbar</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.status_two" resname="tx_webm_domain_model_queueitem.status_two">
+                <source>MIME type not supported</source>
+                <target>MIME-Type wird nicht unterstützt</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.status_three" resname="tx_webm_domain_model_queueitem.status_three">
+                <source>Video larger than the maximum size defined in the extension settings</source>
+                <target>Video größer als die definierte Maximalgröße in den Extension-Settings</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.status_four" resname="tx_webm_domain_model_queueitem.status_four">
+                <source>Video successfully converted to webM format</source>
+                <target>Video erfolgreich in webM-Format konvertiert</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.status_five" resname="tx_webm_domain_model_queueitem.status_five">
+                <source>FileDoesNotExistException (more information in the logs)</source>
+                <target>FileDoesNotExistException (nähere Infos in den Logs)</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.status_six" resname="tx_webm_domain_model_queueitem.status_six">
+                <source>IllegalObjectTypeException (more information in the logs)</source>
+                <target>IllegalObjectTypeException (nähere Infos in den Logs)</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.status_seven" resname="tx_webm_domain_model_queueitem.status_seven">
+                <source>RuntimeException (more information in the logs)</source>
+                <target>RuntimeException (nähere Infos in den Logs)</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.status_eight" resname="tx_webm_domain_model_queueitem.status_eight">
+                <source>Unexpected error (more information in the logs)</source>
+                <target>Unexpected error (more information in the logs)</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.convertionSuccessful" resname="tx_webm_domain_model_queueitem.convertionSuccessful">
+                <source>Video was successfully converted.</source>
+                <target>Video wurde erfolgreich konvertiert.</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.addVideoToQueueSuccessful" resname="tx_webm_domain_model_queueitem.addVideoToQueueSuccessful">
+                <source>Video was successfully added to the queue and will be converted on the next task execution.</source>
+                <target>Video wurde erfolgreich zur Queue hinzugefügt und wird bei der nächsten Task-Ausführung konvertiert.</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.originalVideoNotFound" resname="tx_webm_domain_model_queueitem.originalVideoNotFound">
+                <source>Original video could not be found or has been removed from the file list in the meantime.</source>
+                <target>Original-Video konnte nicht gefunden werden oder wurde zwischenzeitlich aus der Filelist entfernt.</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.videoNotAddedToQueue" resname="tx_webm_domain_model_queueitem.videoNotAddedToQueue">
+                <source>Video could not be added to the queue.</source>
+                <target>Video konnte nicht zur Queue hinzugefügt werden.</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.errorConvertingVideo" resname="tx_webm_domain_model_queueitem.errorConvertingVideo">
+                <source>There was an error converting the video.</source>
+                <target>Bei der Konvertierung des Videos ist ein Fehler aufgetreten.</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.unexpectedError" resname="tx_webm_domain_model_queueitem.unexpectedError">
+                <source>An unexpected error occurred. Please check the log entries for more detailed information.</source>
+                <target>Ein unerwarteter Fehler ist aufgetreten. Bitte überprüfe die Log-Einträge für genauere Informationen.</target>
+            </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.taskTitle" resname="tx_webm_domain_model_queueitem.taskTitle">
+                <source>Converts video files in queue into webM format</source>
+                <target>Konvertiert Videodateien in der Warteschlange in das webM-Format</target>
+            </trans-unit>
+            <trans-unit id="extConf.convertOnSaveAction" resname="extConf.convertOnSaveAction">
+                <source>Convert video on save action in backend (default=convert with task)</source>
+                <target>Video beim Speichern im Backend konvertieren (Standard = mit Task konvertieren)</target>
+            </trans-unit>
+            <trans-unit id="extConf.supportedMimeTypes" resname="extConf.supportedMimeTypes">
+                <source>Supported mime types (comma separated)</source>
+                <target>Unterstützte MIME-Typen (kommagetrennt)</target>
+            </trans-unit>
+            <trans-unit id="extConf.maxFileSize" resname="extConf.maxFileSize">
+                <source>Max file size of original video to convert (videos which are larger wil be ignored)</source>
+                <target>Maximale Dateigröße des zu konvertierenden Original-Videos (größere Videos werden ignoriert)</target>
+            </trans-unit>
+            <trans-unit id="extConf.storageFolder" resname="extConf.storageFolder">
+                <source>Save queue items in this folder/storage</source>
+                <target>Queue-Items in diesem Ordner/Storage speichern</target>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>

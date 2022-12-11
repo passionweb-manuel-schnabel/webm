@@ -1,0 +1,8 @@
+# cat=basic; type=boolean; label=LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:extConf.convertOnSaveAction
+convertOnSave = 0
+# cat=basic; type=string; label=LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:extConf.supportedMimeTypes
+mimeTypes = video/mp4,video/ogg,video/x-m4v,application/ogg
+# cat=basic; type=int+; label=LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:extConf.maxFileSize
+maxVideoFileSize = 0
+# cat=basic; type=int+; label=LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:extConf.storageFolder
+storagePid = 0
