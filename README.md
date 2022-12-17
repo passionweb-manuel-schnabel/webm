@@ -1,8 +1,8 @@
 # WebM for TYPO3 CMS
 
-Adds an automagically created _WebP_ copy for every processed jpg/jpeg/png/gif image in the format
+Creates an automatically _WebM_ file for every supported video format by TYPO3.
 
-    original.ext.webp
+    original.mp4 --> original.webm
 
 ## What is WebM?
 
