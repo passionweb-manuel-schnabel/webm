@@ -10,5 +10,13 @@ services:
   Passionweb\Webm\Service\WebmConverterService:
     public: true
 
-  Passionweb\Webm\Hooks\DataHandlerHook:
+  Passionweb\Webm\Hooks\DataHandlerHook:[
     public: true
+
+  Passionweb\Webm\Command\WebmConverterCommand:
+    tags:
+      - name: 'console.command'
+        command: 'webm:convert'
+        description: 'Converts video files in queue into webM format'
+        schedulable: true
+        hidden: false

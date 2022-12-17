@@ -52,7 +52,7 @@
                 <source>Video was successfully converted.</source>
             </trans-unit>
             <trans-unit id="tx_webm_domain_model_queueitem.addVideoToQueueSuccessful" resname="tx_webm_domain_model_queueitem.addVideoToQueueSuccessful">
-                <source>Video was successfully added to the queue and will be converted on the next task execution.</source>
+                <source>Video was successfully added to the queue and will be converted on the next task or symfony command execution.</source>
             </trans-unit>
             <trans-unit id="tx_webm_domain_model_queueitem.originalVideoNotFound" resname="tx_webm_domain_model_queueitem.originalVideoNotFound">
                 <source>Original video could not be found or has been removed from the file list in the meantime.</source>
@@ -70,7 +70,7 @@
                 <source>Converts video files in queue into webM format</source>
             </trans-unit>
             <trans-unit id="extConf.convertOnSaveAction" resname="extConf.convertOnSaveAction">
-                <source>Convert video on save action in backend (default=convert with task)</source>
+                <source>Convert video on save action in backend (default=convert with task/symfony command)</source>
             </trans-unit>
             <trans-unit id="extConf.supportedMimeTypes" resname="extConf.supportedMimeTypes">
                 <source>Supported mime types (comma separated)</source>

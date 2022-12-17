@@ -68,8 +68,8 @@
                 <target>Video wurde erfolgreich konvertiert.</target>
             </trans-unit>
             <trans-unit id="tx_webm_domain_model_queueitem.addVideoToQueueSuccessful" resname="tx_webm_domain_model_queueitem.addVideoToQueueSuccessful">
-                <source>Video was successfully added to the queue and will be converted on the next task execution.</source>
-                <target>Video wurde erfolgreich zur Queue hinzugefügt und wird bei der nächsten Task-Ausführung konvertiert.</target>
+                <source>Video was successfully added to the queue and will be converted on the next task or symfony command execution.</source>
+                <target>Video wurde erfolgreich zur Queue hinzugefügt und wird bei der nächsten Task- bzw. Symfony Command-Ausführung konvertiert.</target>
             </trans-unit>
             <trans-unit id="tx_webm_domain_model_queueitem.originalVideoNotFound" resname="tx_webm_domain_model_queueitem.originalVideoNotFound">
                 <source>Original video could not be found or has been removed from the file list in the meantime.</source>
@@ -92,8 +92,8 @@
                 <target>Konvertiert Videodateien in der Warteschlange in das webM-Format</target>
             </trans-unit>
             <trans-unit id="extConf.convertOnSaveAction" resname="extConf.convertOnSaveAction">
-                <source>Convert video on save action in backend (default=convert with task)</source>
-                <target>Video beim Speichern im Backend konvertieren (Standard = mit Task konvertieren)</target>
+                <source>Convert video on save action in backend (default=convert with task/symfony command)</source>
+                <target>Video beim Speichern im Backend konvertieren (Standard = mit Task/Symfony Command konvertieren)</target>
             </trans-unit>
             <trans-unit id="extConf.supportedMimeTypes" resname="extConf.supportedMimeTypes">
                 <source>Supported mime types (comma separated)</source>

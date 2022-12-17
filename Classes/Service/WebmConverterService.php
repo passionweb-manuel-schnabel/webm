@@ -162,10 +162,10 @@ class WebmConverterService
      * @return void
      * @throws IllegalObjectTypeException
      */
-    public function addVideoToTaskQueue(File $originalVideoFile, array $datamap, string $newId)
+    public function addVideoToQueue(File $originalVideoFile, array $datamap, string $newId)
     {
         $tablenames = array_key_first($datamap);
-        $uidForeign = array_key_first($datamap[$tablenames]);
+        $uidForeign = (int) array_key_first($datamap[$tablenames]);
         foreach($datamap[$tablenames][$uidForeign] as $key => $value) {
             if(!empty($value) && !is_array($value)) {
                 $parts = explode(",", $value);
@@ -224,7 +224,7 @@ class WebmConverterService
                         $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.convertionSuccessful', 'webm'), FlashMessage::OK);
 
                     } else {
-                        $this->addVideoToTaskQueue($file, $pObj->datamap, $newId);
+                        $this->addVideoToQueue($file, $pObj->datamap, $newId);
                         $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.addVideoToQueueSuccessful', 'webm'), FlashMessage::OK);
                     }
                 }
@@ -297,7 +297,6 @@ class WebmConverterService
      * @throws UnknownObjectException
      */
     private function updateQueueItem($queueItem, $status) {
-        file_put_contents('task.log', 'UPDATE WITH STATUS:' . $status ."\n", FILE_APPEND);
         // hide and update current queue item in any case
         $queueItem->setStatus($status);
         $queueItem->setHidden(1);
