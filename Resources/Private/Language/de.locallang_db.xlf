@@ -28,8 +28,8 @@
                 <target>Status</target>
             </trans-unit>
             <trans-unit id="tx_webm_domain_model_queueitem.status_zero" resname="tx_webm_domain_model_queueitem.status_zero">
-                <source>in the queue</source>
-                <target>in der Warteschlange</target>
+                <source>In the queue</source>
+                <target>In der Warteschlange</target>
             </trans-unit>
             <trans-unit id="tx_webm_domain_model_queueitem.status_one" resname="tx_webm_domain_model_queueitem.status_one">
                 <source>Original video not found</source>
