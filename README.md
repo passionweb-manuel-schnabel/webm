@@ -38,10 +38,10 @@ You can set parameters for the conversion handling in the extension configuratio
 
 ### `convertOnSave`
 
-    # cat=basic; type=boolean; label=Convert video on save action in backend (default=convert with task)
+    # cat=basic; type=boolean; label=Convert video on save action in backend (default=convert with task/symfony command)
     convertOnSave = 0
 
-Every video will be added to the queue and will be processed with the corresponding task by default. If you want to convert the video with saving it you can enable that with this option. The video will not be added to the queue.
+Every video will be added to the queue and will be processed with the corresponding task/symfony command by default. If you want to convert the video with saving it you can enable that with this option. The video will not be added to the queue.
 
 ### `mimeTypes`
 
