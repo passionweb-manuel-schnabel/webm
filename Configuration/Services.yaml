@@ -10,7 +10,7 @@ services:
   Passionweb\Webm\Service\WebmConverterService:
     public: true
 
-  Passionweb\Webm\Hooks\DataHandlerHook:[
+  Passionweb\Webm\Hooks\DataHandlerHook:
     public: true
 
   Passionweb\Webm\Command\WebmConverterCommand:
