@@ -8,16 +8,13 @@ $EM_CONF['webm'] = [
     'author_email' => 'service@passionweb.de',
     'state' => 'stable',
     'author_company' => 'PassionWeb Manuel Schnabel',
+    'uploadfolder' => false,
+    'createDirs' => '',
+    'clearCacheOnLoad' => true,
     'version' => '1.0.0',
     'constraints' => [
-        'depends' => [
-            'typo3' => '11.5.0-11.5.99'
-        ],
-        'conflicts' => [
-        ],
-        'suggests' => [
-        ],
-    ],
-    'suggests' => [
+        'depends' => ['typo3' => '11.5.0-11.5.99'],
+        'conflicts' => [],
+        'suggests' => [],
     ],
 ];
