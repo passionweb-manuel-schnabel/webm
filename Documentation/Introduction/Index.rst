@@ -40,8 +40,9 @@ This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to 
 
 - Source: `PHP-FFmpeg <https://github.com/PHP-FFMpeg/PHP-FFMpeg>`_
 
+Browser Support
+---------------
 
-
-
+- See `WebM video format <https://caniuse.com/webm>`_
 
 
