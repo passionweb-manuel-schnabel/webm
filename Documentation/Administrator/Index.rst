@@ -15,8 +15,9 @@ Requirements
 
 This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to prepare your server for the usage and must install the necessary packages. A complete guide and further information can be found here:
 
--- Source: `FFmpeg <https://ffmpeg.org/>`_
--- Source: `PHP-FFmpeg <https://github.com/PHP-FFMpeg/PHP-FFMpeg>`_
+- Source: `FFmpeg <https://ffmpeg.org/>`_
+
+- Source: `PHP-FFmpeg <https://github.com/PHP-FFMpeg/PHP-FFMpeg>`_
 
 Installation
 ------------
@@ -70,5 +71,6 @@ Web server configuration
 
 This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to prepare your server for the usage and must install the necessary packages. A complete guide and further information can be found here:
 
--- Source: `FFmpeg <https://ffmpeg.org/download.html>`_
--- Source: `PHP-FFmpeg <https://github.com/PHP-FFMpeg/PHP-FFMpeg>`_
+- Source: `FFmpeg <https://ffmpeg.org/download.html>`_
+
+- Source: `PHP-FFmpeg <https://github.com/PHP-FFMpeg/PHP-FFMpeg>`_
