@@ -10,7 +10,7 @@ WebM is an audiovisual media file format. It is primarily intended to offer a ro
 for images. The development of the format is sponsored by Google, and the corresponding software is distributed under a BSD license. The WebM container is based on a profile of Matroska. WebM
 initially supported VP8 video and Vorbis audio streams. In 2013, it was updated to accommodate VP9 video and Opus audio. It also supports the new AV1 codec.
 
-Source: `WebM <https://en.wikipedia.org/wiki/WebM>`
+Source: [WebM](https://en.wikipedia.org/wiki/WebM "WebM")
 
 ## Installation
 
@@ -25,8 +25,9 @@ Add via composer:
 
 This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to prepare your server for the usage and must install the necessary packages. A complete guide and further information can be found here:
 
--- Source: `FFmpeg <https://ffmpeg.org/>`_
--- Source: `PHP-FFmpeg <https://github.com/PHP-FFMpeg/PHP-FFMpeg>`_
+Source: [FFmpeg](https://ffmpeg.org/ "FFmpeg")
+
+Source: [PHP-FFmpeg](https://github.com/PHP-FFMpeg/PHP-FFMpeg "PHP-FFmpeg")
 
 ## FFMpeg support with DDEV
 
