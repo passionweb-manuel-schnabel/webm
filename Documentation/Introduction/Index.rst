@@ -12,7 +12,7 @@ Introduction
 What does it do?
 ----------------
 
-Creates an automatically _WebM_ file for every supported video format by TYPO3.
+Creates a _WebM_ file for every configured (and supported) video format. Either via Symfony command or hook (can be configured)
 
   original.mp4 --> original.webm
 
@@ -43,6 +43,6 @@ This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to 
 Browser Support
 ---------------
 
-- See `WebM video format <https://caniuse.com/webm>`_
+- Detailed information to browser support can be find here: `WebM video format <https://caniuse.com/webm>`_
 
 

@@ -11,6 +11,7 @@ Target group: **Administrators**
 .. _admin-installation:
 
 Requirements
+Requirements
 ------------
 
 This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to prepare your server for the usage and must install the necessary packages. A complete guide and further information can be found here:
@@ -40,10 +41,10 @@ You can set parameters for the conversion in the extension configuration.
 
 .. code-block:: none
 
-  # cat=basic; type=boolean; label=Convert video on save action in backend (default=convert with task/symfony command)
+  # cat=basic; type=boolean; label=Convert video on save action in backend (default=convert with task/Symfony command)
   convertOnSave = 0
 
-Every video will be added to the queue and will be processed with the corresponding task/symfony command by default. If you want to convert the video with saving it you can enable that with this option. The video will not be added to the queue.
+Every video will be added to the queue and will be processed with the corresponding task/Symfony command by default. If you want to convert the video with saving it you can enable that with this option. The video will not be added to the queue.
 
 .. code-block:: none
 

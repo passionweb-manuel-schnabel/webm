@@ -1,6 +1,6 @@
 # WebM for TYPO3 CMS
 
-Creates an automatically _WebM_ file for every supported video format by TYPO3.
+Creates a _WebM_ file for every configured (and supported) video format. Either via Symfony command or hook (can be configured).
 
     original.mp4 --> original.webm
 
@@ -31,7 +31,7 @@ Source: [PHP-FFmpeg](https://github.com/PHP-FFMpeg/PHP-FFMpeg "PHP-FFmpeg")
 
 ## FFMpeg support with DDEV
 
-You can extend your `config.yaml` and add `webimage_extra_packages: [ffmpeg]` to install the FFMpeg package
+You can extend the `config.yaml` in your `.ddev` folder and add `webimage_extra_packages: [ffmpeg]` to install the FFMpeg package
 
 ## Extension settings
 
@@ -39,10 +39,10 @@ You can set parameters for the conversion handling in the extension configuratio
 
 ### `convertOnSave`
 
-    # cat=basic; type=boolean; label=Convert video on save action in backend (default=convert with task/symfony command)
+    # cat=basic; type=boolean; label=Convert video on save action in backend (default=convert with task/Symfony command)
     convertOnSave = 0
 
-Every video will be added to the queue and will be processed with the corresponding task/symfony command by default. If you want to convert the video with saving it you can enable that with this option. The video will not be added to the queue.
+Every video will be added to the queue and will be processed with the corresponding task/Symfony command by default. If you want to convert the video with saving it you can enable that with this option. The video will not be added to the queue.
 
 ### `mimeTypes`
 

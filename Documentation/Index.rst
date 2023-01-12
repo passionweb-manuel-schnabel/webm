@@ -4,7 +4,7 @@
 .. _start:
 
 =============================================================
-Extension Name
+Extension WebM
 =============================================================
 
 .. only:: html
@@ -22,10 +22,10 @@ Extension Name
 		Manual covering the TYPO3 extension *"webm"*.
 
 	:Keywords:
-		webm,video,performance,convert,mp4,ogg,x-m4v
+		webm,video,FFmpeg,performance,convert,mp4,ogg,x-m4v
 
 	:Copyright:
-		2022
+		2023
 
 	:Author:
 		Manuel Schnabel
