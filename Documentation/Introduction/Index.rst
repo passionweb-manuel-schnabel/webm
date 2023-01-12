@@ -43,6 +43,6 @@ This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to 
 Browser Support
 ---------------
 
-- Detailed information to browser support can be find here: `WebM video format <https://caniuse.com/webm>`_
+- Detailed information to browser support can be found here: `WebM video format <https://caniuse.com/webm>`_
 
 

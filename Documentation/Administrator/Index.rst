@@ -11,7 +11,6 @@ Target group: **Administrators**
 .. _admin-installation:
 
 Requirements
-Requirements
 ------------
 
 This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to prepare your server for the usage and must install the necessary packages. A complete guide and further information can be found here:
