@@ -22,7 +22,7 @@ Extension WebM
 		Manual covering the TYPO3 extension *"webm"*.
 
 	:Keywords:
-		webm,video,ffmpeg,performance,convert,mp4,ogg,x-m4v
+		webm,video,ffmpeg,performance,compression,compress,convert,mp4,ogg,x-m4v
 
 	:Copyright:
 		2023

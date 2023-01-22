@@ -10,7 +10,7 @@ Introduction
 .. _what-it-does:
 
 What does it do?
-----------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Creates a _WebM_ file for every configured (and supported) video format. Either via Symfony command or hook (can be configured)
 
@@ -26,13 +26,13 @@ What is WebM?
   - Source: `WEbM <https://en.wikipedia.org/wiki/WebM>`_
 
 Drawbacks
----------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Note that this extension produces an additional load on your server (each supported video will be processed) and possibly creates a lot of
 additional files that consume disk space. Size varies depending on your configuration.
 
 Used solutions and libraries
-------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to prepare your server for the usage and must install the necessary packages. A complete guide and further information can be found here:
 
@@ -41,7 +41,7 @@ This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to 
 - Source: `PHP-FFmpeg <https://github.com/PHP-FFMpeg/PHP-FFMpeg>`_
 
 Browser Support
----------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - Detailed information to browser support can be found here: `WebM video format <https://caniuse.com/webm>`_
 

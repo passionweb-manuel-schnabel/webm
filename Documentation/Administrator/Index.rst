@@ -11,7 +11,7 @@ Target group: **Administrators**
 .. _admin-installation:
 
 Requirements
-------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to prepare your server for the usage and must install the necessary packages. A complete guide and further information can be found here:
 
@@ -20,7 +20,7 @@ This extension uses the FFmpeg solution and the PHP-FFmpeg library. You need to 
 - Source: `PHP-FFmpeg <https://github.com/PHP-FFMpeg/PHP-FFMpeg>`_
 
 Installation
-------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Add via composer.json:
 
@@ -31,10 +31,10 @@ Add via composer.json:
 .. _admin-configuration:
 
 Configuration
--------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Extension manager configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------
 
 You can set parameters for the conversion in the extension configuration.
 

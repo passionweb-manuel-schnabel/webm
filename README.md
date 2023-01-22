@@ -1,4 +1,4 @@
-# WebM for TYPO3 CMS
+# TYPO3 Extension `WebM`
 
 Creates a _WebM_ file for every configured (and supported) video format. Either via Symfony command or hook (can be configured).
 
