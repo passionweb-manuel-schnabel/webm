@@ -23,6 +23,7 @@ use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
@@ -221,26 +222,26 @@ class WebmConverterService
                          * set uid of new created webm sys file for storing sys_file_reference in content element
                          */
                         $fieldArray['uid_local'] = $fileWebM->getUid();
-                        $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.convertionSuccessful', 'webm'), FlashMessage::OK);
+                        $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.convertionSuccessful', 'webm'), ContextualFeedbackSeverity::OK);
 
                     } else {
                         $this->addVideoToQueue($file, $pObj->datamap, $newId);
-                        $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.addVideoToQueueSuccessful', 'webm'), FlashMessage::OK);
+                        $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.addVideoToQueueSuccessful', 'webm'), ContextualFeedbackSeverity::OK);
                     }
                 }
             }
         } catch (FileDoesNotExistException $e) {
             $this->logger->error($e->getMessage(), ['sys_file_uid' => $fieldArray['uid_local']]);
-            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.originalVideoNotFound', 'webm'), FlashMessage::ERROR);
+            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.originalVideoNotFound', 'webm'), ContextualFeedbackSeverity::ERROR);
         } catch (IllegalObjectTypeException $e) {
             $this->logger->error($e->getMessage());
-            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.videoNotAddedToQueue', 'webm'), FlashMessage::ERROR);
+            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.videoNotAddedToQueue', 'webm'), ContextualFeedbackSeverity::ERROR);
         } catch (RuntimeException $e) {
             $this->logger->error($e->getMessage());
-            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.errorConvertingVideo', 'webm'), FlashMessage::ERROR);
+            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.errorConvertingVideo', 'webm'), ContextualFeedbackSeverity::ERROR);
         } catch (Exception $e) {
             $this->logger->error($e->getMessage());
-            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.unexpectedError', 'webm'), FlashMessage::ERROR);
+            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.unexpectedError', 'webm'), ContextualFeedbackSeverity::ERROR);
         }
     }
 
@@ -344,13 +345,7 @@ class WebmConverterService
         $dataHandler->clear_cacheCmd('all');
     }
 
-    /**
-     * @param string $messageText
-     * @param string $messageHeader
-     * @param string $severity
-     * @return void
-     */
-    private function addFlashMessage($messageText, $messageHeader, $severity) {
+    private function addFlashMessage(string $messageText, string $messageHeader, ContextualFeedbackSeverity $severity): void {
         $message = GeneralUtility::makeInstance(FlashMessage::class,
             $messageText,
             $messageHeader,
