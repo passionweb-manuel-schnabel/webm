@@ -45,4 +45,9 @@ Browser Support
 
 - Detailed information to browser support can be found here: `WebM video format <https://caniuse.com/webm>`_
 
+Achieving more together or Feedback, Feedback, Feedback
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+I'm grateful for any feedback! Be it suggestions for improvement, extension requests or just a (constructive) feedback on how good or crappy the extension is.
+
+Feel free to send me your feedback to `service@passionweb.de <mailto:service@passionweb.de>`_ or `contact me on Slack <https://typo3.slack.com/team/U02FG49J4TG>`_
