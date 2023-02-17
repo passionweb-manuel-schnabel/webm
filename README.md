@@ -74,3 +74,9 @@ Every problem is logged to the TYPO3 log (normally found in `var/log/typo3_*.log
 
 Note that this extension produces an additional load on your server (each supported video will be processed) and possibly creates a lot of
 additional files that consume disk space. Size varies depending on your configuration.
+
+## Achieving more together or Feedback, Feedback, Feedback
+
+I'm grateful for any feedback! Be it suggestions for improvement, extension requests or just a (constructive) feedback on how good or crappy the extension is.
+
+Feel free to send me your feedback to [service@passionweb.de](mailto:service@passionweb.de "Send Feedback") or [contact me on Slack](https://typo3.slack.com/team/U02FG49J4TG "Contact me on Slack")
