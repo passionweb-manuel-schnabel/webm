@@ -13,7 +13,7 @@
   ],
   "require": {
     "php": "^8.0",
-    "typo3/cms-core": "~12.2.0",
+    "typo3/cms-core": "^12.4",
     "php-ffmpeg/php-ffmpeg": "^1.0"
   },
   "autoload": {
