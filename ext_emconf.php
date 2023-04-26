@@ -1,7 +1,7 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'Creates WebM copies of videos',
+    'title' => 'WebM copies of videos',
     'description' => 'Creates a WebM file for every configured (and supported) video format. Either via Symfony command or hook (can be configured).',
     'category' => 'misc',
     'author' => 'Manuel Schnabel',
