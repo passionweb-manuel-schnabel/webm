@@ -23,6 +23,7 @@ use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Resource\FileRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
@@ -162,11 +163,18 @@ class WebmConverterService
      * @return void
      * @throws IllegalObjectTypeException
      */
-    public function addVideoToQueue(File $originalVideoFile, array $datamap, string $newId)
+    public function addVideoToQueue(File $originalVideoFile, array $datamap, string $newId, array $substNEWwithIDs)
     {
         $tablenames = array_key_first($datamap);
-        $uidForeign = (int) array_key_first($datamap[$tablenames]);
-        foreach($datamap[$tablenames][$uidForeign] as $key => $value) {
+        if(count($substNEWwithIDs) > 0) {
+            $newRecordId = array_key_first($substNEWwithIDs);
+            $uidForeign = $substNEWwithIDs[$newRecordId];
+        } else {
+            $uidForeign = (int) array_key_first($datamap[$tablenames]);
+            $newRecordId = $uidForeign;
+        }
+
+        foreach($datamap[$tablenames][$newRecordId] as $key => $value) {
             if(!empty($value) && !is_array($value)) {
                 $parts = explode(",", $value);
                 if(in_array($newId, $parts)) {
@@ -193,7 +201,7 @@ class WebmConverterService
      * @param string $newId
      * @return void
      */
-    public function handleVideoConvertion(&$fieldArray, $pObj, $newId) {
+    public function handleVideoConvertion(array &$fieldArray, DataHandler $pObj, string $newId) {
         try {
             $file = $this->getVideoFileByUid((int) $fieldArray['uid_local']);
 
@@ -224,7 +232,7 @@ class WebmConverterService
                         $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.convertionSuccessful', 'webm'), FlashMessage::OK);
 
                     } else {
-                        $this->addVideoToQueue($file, $pObj->datamap, $newId);
+                        $this->addVideoToQueue($file, $pObj->datamap, $newId, $pObj->substNEWwithIDs);
                         $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.addVideoToQueueSuccessful', 'webm'), FlashMessage::OK);
                     }
                 }

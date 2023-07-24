@@ -32,6 +32,4 @@ class DataHandlerHook
             $webMService->handleVideoConvertion($fieldArray, $pObj, $id);
         }
     }
-
-
 }
