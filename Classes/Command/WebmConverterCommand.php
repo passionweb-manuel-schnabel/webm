@@ -4,11 +4,10 @@ namespace Passionweb\Webm\Command;
 use Passionweb\Webm\Service\WebmConverterService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Exception;
-use TYPO3\CMS\Core\Log\Logger;
+use TYPO3\CMS\Core\Log\LogManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class WebmConverterCommand extends Command
@@ -42,7 +41,7 @@ class WebmConverterCommand extends Command
 
             return Command::SUCCESS;
         } catch (Exception $e) {
-            $logger = GeneralUtility::makeInstance(Logger::class);
+            $logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
             $logger->error($e->getMessage());
 
             $io->error('Convertion of videos in queue failed with following output:');
