@@ -163,7 +163,7 @@ class WebmConverterService
      * @return void
      * @throws IllegalObjectTypeException
      */
-    public function addVideoToQueue(File $originalVideoFile, array $datamap, string $newId, array $substNEWwithIDs)
+    public function addVideoToQueue(File $originalVideoFile, array $datamap, string $newId, array $substNEWwithIDs): bool
     {
         $tablenames = array_key_first($datamap);
         $fieldname = '';
@@ -195,7 +195,9 @@ class WebmConverterService
 
             $this->queueItemRepository->add($newQueueItem);
             $this->persistenceManager->persistAll();
+            return true;
         }
+        return false;
     }
 
     /**
@@ -235,8 +237,9 @@ class WebmConverterService
                         $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.convertionSuccessful', 'webm'), ContextualFeedbackSeverity::OK);
 
                     } else {
-                        $this->addVideoToQueue($file, $pObj->datamap, $newId, $pObj->substNEWwithIDs);
-                        $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.addVideoToQueueSuccessful', 'webm'), ContextualFeedbackSeverity::OK);
+                        if($this->addVideoToQueue($file, $pObj->datamap, $newId, $pObj->substNEWwithIDs)) {
+                            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.addVideoToQueueSuccessful', 'webm'), ContextualFeedbackSeverity::OK);
+                        }
                     }
                 }
             }
