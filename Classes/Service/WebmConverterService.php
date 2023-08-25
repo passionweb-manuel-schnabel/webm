@@ -166,6 +166,8 @@ class WebmConverterService
     public function addVideoToQueue(File $originalVideoFile, array $datamap, string $newId, array $substNEWwithIDs)
     {
         $tablenames = array_key_first($datamap);
+        $fieldname = '';
+
         if(count($substNEWwithIDs) > 0) {
             $newRecordId = array_key_first($substNEWwithIDs);
             $uidForeign = $substNEWwithIDs[$newRecordId];
@@ -183,16 +185,17 @@ class WebmConverterService
                 }
             }
         }
+        if(!empty($fieldname)) {
+            $newQueueItem = new QueueItem();
+            $newQueueItem->setPid((int) $this->extConf['storagePid']);
+            $newQueueItem->setFieldname($fieldname);
+            $newQueueItem->setTablenames($tablenames);
+            $newQueueItem->setUidForeign($uidForeign);
+            $newQueueItem->setSysFileUid($originalVideoFile->getUid());
 
-        $newQueueItem = new QueueItem();
-        $newQueueItem->setPid((int) $this->extConf['storagePid']);
-        $newQueueItem->setFieldname($fieldname);
-        $newQueueItem->setTablenames($tablenames);
-        $newQueueItem->setUidForeign($uidForeign);
-        $newQueueItem->setSysFileUid($originalVideoFile->getUid());
-
-        $this->queueItemRepository->add($newQueueItem);
-        $this->persistenceManager->persistAll();
+            $this->queueItemRepository->add($newQueueItem);
+            $this->persistenceManager->persistAll();
+        }
     }
 
     /**
