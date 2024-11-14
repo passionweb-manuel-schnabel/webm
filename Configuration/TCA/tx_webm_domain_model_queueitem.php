@@ -37,7 +37,10 @@ return [
                 'renderType' => 'selectSingle',
                 'default' => 0,
                 'items' => [
-                    ['', 0],
+                    [
+                    'label' => '',
+                    'value' => 0,
+                    ]
                 ],
                 'foreign_table' => 'tx_webm_domain_model_queueitem',
                 'foreign_table_where' => 'AND {#tx_webm_domain_model_queueitem}.{#pid}=###CURRENT_PID### AND {#tx_webm_domain_model_queueitem}.{#sys_language_uid} IN (-1,0)',
@@ -56,9 +59,16 @@ return [
                 'renderType' => 'checkboxToggle',
                 'items' => [
                     [
-                        0 => '',
-                        1 => '',
-                        'invertStateDisplay' => true
+                        'label' => 0,
+                        'value' => '',
+                    ],
+                    [
+                        'label' => 1,
+                        'value' => '',
+                    ],
+                    [
+                        'label' => 'invertStateDisplay',
+                        'value' => true
                     ]
                 ],
             ],
@@ -67,9 +77,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
+                'type' => 'datetime',
+                'format' => 'date',
                 'default' => 0,
                 'behaviour' => [
                     'allowLanguageSynchronization' => true
@@ -80,9 +89,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
-                'eval' => 'datetime,int',
+                'type' => 'datetime',
+                'format' => 'date',
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
@@ -117,9 +125,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.uid_foreign',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
                 'size' => 30,
-                'eval' => 'int',
                 'default' => 0
             ],
         ],
@@ -127,9 +134,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.sys_file_uid',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
                 'size' => 30,
-                'eval' => 'int',
                 'default' => 0
             ],
         ],
@@ -142,40 +148,40 @@ return [
                 'default' => 0,
                 'items' => [
                     [
-                        'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_zero',
-                        0,
+                        'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_zero',
+                        'value' => 0,
                     ],
                     [
-                        'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_one',
-                        1,
+                        'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_one',
+                        'value' => 1,
                     ],
                     [
-                        'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_two',
-                        2,
+                        'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_two',
+                        'value' => 2,
                     ],
                     [
-                        'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_three',
-                        3,
+                        'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_three',
+                        'value' => 3,
                     ],
                     [
-                        'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_four',
-                        4,
+                        'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_four',
+                        'value' => 4,
                     ],
                     [
-                        'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_five',
-                        5,
+                        'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_five',
+                        'value' => 5,
                     ],
                     [
-                        'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_six',
-                        6,
+                        'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_six',
+                        'value' => 6,
                     ],
                     [
-                        'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_seven',
-                        7,
+                        'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_seven',
+                        'value' => 7,
                     ],
                     [
-                        'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_eight',
-                        8,
+                        'label' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.status_eight',
+                        'value' => 8,
                     ],
                 ],
             ],

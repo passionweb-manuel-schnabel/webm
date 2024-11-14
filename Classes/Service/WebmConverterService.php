@@ -76,7 +76,7 @@ class WebmConverterService
     /**
      * @return false|string[]
      */
-    public function getSupportedMimeTypes()
+    public function getSupportedMimeTypes(): array|false
     {
         return explode(',', $this->extConf['mimeTypes']);
     }
@@ -94,7 +94,7 @@ class WebmConverterService
      * @return File
      * @throws FileDoesNotExistException
      */
-    public function getVideoFileByUid(int $uid)
+    public function getVideoFileByUid(int $uid): File
     {
         return $this->resourceFactory->getFileObject($uid);
     }
@@ -160,7 +160,8 @@ class WebmConverterService
      * @param File $originalVideoFile
      * @param array $datamap
      * @param string $newId
-     * @return void
+     * @param array $substNEWwithIDs
+     * @return bool
      * @throws IllegalObjectTypeException
      */
     public function addVideoToQueue(File $originalVideoFile, array $datamap, string $newId, array $substNEWwithIDs): bool
@@ -206,7 +207,8 @@ class WebmConverterService
      * @param string $newId
      * @return void
      */
-    public function handleVideoConvertion(array &$fieldArray, DataHandler $pObj, string $newId) {
+    public function handleVideoConvertion(array &$fieldArray, DataHandler $pObj, string $newId): void
+    {
         try {
             $file = $this->getVideoFileByUid((int) $fieldArray['uid_local']);
 
