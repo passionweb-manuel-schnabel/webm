@@ -9,9 +9,9 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'PassionWeb Manuel Schnabel',
     'state' => 'stable',
     'clearCacheOnLoad' => true,
-    'version' => '2.1.2',
+    'version' => '3.0.0',
     'constraints' => [
-        'depends' => ['typo3' => '12.0.0-12.4.99'],
+        'depends' => ['typo3' => '13.0.0-13.4.99'],
         'conflicts' => [],
         'suggests' => [],
     ],
