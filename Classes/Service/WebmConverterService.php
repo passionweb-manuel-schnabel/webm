@@ -29,24 +29,12 @@ use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use function explode;
 
+use function explode;
 
 class WebmConverterService
 {
     protected const BYTES = 1024 * 1024;
-
-    protected LoggerInterface $logger;
-
-    protected FlashMessageService $flashMessageService;
-
-    protected ResourceFactory $resourceFactory;
-
-    protected ExtensionConfiguration $extensionConfiguration;
-
-    protected QueueItemRepository $queueItemRepository;
-
-    protected PersistenceManager $persistenceManager;
 
     protected array $extConf = [];
 
@@ -55,43 +43,28 @@ class WebmConverterService
      * @throws ExtensionConfigurationExtensionNotConfiguredException
      */
     public function __construct(
-        LoggerInterface         $logger,
-        FlashMessageService     $flashMessageService,
-        ResourceFactory         $resourceFactory,
-        ExtensionConfiguration  $extensionConfiguration,
-        QueueItemRepository     $queueItemRepository,
-        PersistenceManager      $persistenceManager
-    )
-    {
-        $this->logger = $logger;
-        $this->flashMessageService = $flashMessageService;
-        $this->resourceFactory = $resourceFactory;
-        $this->extensionConfiguration = $extensionConfiguration;
-        $this->queueItemRepository = $queueItemRepository;
-        $this->persistenceManager = $persistenceManager;
-
+        protected LoggerInterface         $logger,
+        protected FlashMessageService     $flashMessageService,
+        protected ResourceFactory         $resourceFactory,
+        protected ExtensionConfiguration  $extensionConfiguration,
+        protected QueueItemRepository     $queueItemRepository,
+        protected PersistenceManager      $persistenceManager,
+        protected FileRepository          $fileRepository
+    ) {
         $this->extConf = $this->extensionConfiguration->get('webm');
     }
 
-    /**
-     * @return false|string[]
-     */
     public function getSupportedMimeTypes(): array|false
     {
         return explode(',', $this->extConf['mimeTypes']);
     }
 
-    /**
-     * @return bool
-     */
     public function convertOnSave(): bool
     {
         return $this->extConf['convertOnSave'] === '1';
     }
 
     /**
-     * @param int $uid
-     * @return File
      * @throws FileDoesNotExistException
      */
     public function getVideoFileByUid(int $uid): File
@@ -99,55 +72,31 @@ class WebmConverterService
         return $this->resourceFactory->getFileObject($uid);
     }
 
-    /**
-     * @param File $originalVideoFile
-     * @return File|null
-     */
     public function getWebMFileByCombinedIdentifier(File $originalVideoFile): ?File
     {
         return $this->resourceFactory->getFileObjectFromCombinedIdentifier($this->getCombinedFilePathWebM($originalVideoFile));
     }
 
-    /**
-     * @param File $originalVideoFile
-     * @return string
-     */
     public function getAbsoluteFileStoragePath(File $originalVideoFile): string
     {
         return Environment::getPublicPath() . '/' . substr($originalVideoFile->getStorage()->getConfiguration()['basePath'], 0, -1);
     }
 
-    /**
-     * @param File $originalVideoFile
-     * @return string
-     */
     public function getCombinedFilePathWebM(File $originalVideoFile): string
     {
         return str_replace($originalVideoFile->getExtension(), 'webm', $originalVideoFile->getCombinedIdentifier());
     }
 
-    /**
-     * @param File $originalVideoFile
-     * @return string
-     */
     public function getFileIdentifierWebM(File $originalVideoFile): string
     {
         return str_replace($originalVideoFile->getExtension(), 'webm', $originalVideoFile->getIdentifier());
     }
 
-    /**
-     * @param File $originalVideoFile
-     * @return string
-     */
     public function getAbsoluteFilePathWebM(File $originalVideoFile): string
     {
         return $this->getAbsoluteFileStoragePath($originalVideoFile) . $this->getFileIdentifierWebM($originalVideoFile);
     }
 
-    /**
-     * @param File $originalVideoFile
-     * @return File|null
-     */
     public function convertVideoToWebM(File $originalVideoFile): ?File
     {
         $ffmpeg = FFMpeg::create();
@@ -157,11 +106,6 @@ class WebmConverterService
     }
 
     /**
-     * @param File $originalVideoFile
-     * @param array $datamap
-     * @param string $newId
-     * @param array $substNEWwithIDs
-     * @return bool
      * @throws IllegalObjectTypeException
      */
     public function addVideoToQueue(File $originalVideoFile, array $datamap, string $newId, array $substNEWwithIDs): bool
@@ -169,7 +113,7 @@ class WebmConverterService
         $tablenames = array_key_first($datamap);
         $fieldname = '';
 
-        if(count($substNEWwithIDs) > 0) {
+        if (count($substNEWwithIDs) > 0) {
             $newRecordId = array_key_first($substNEWwithIDs);
             $uidForeign = $substNEWwithIDs[$newRecordId];
         } else {
@@ -177,16 +121,16 @@ class WebmConverterService
             $newRecordId = $uidForeign;
         }
 
-        foreach($datamap[$tablenames][$newRecordId] as $key => $value) {
-            if(!empty($value) && !is_array($value)) {
+        foreach ($datamap[$tablenames][$newRecordId] as $key => $value) {
+            if (!empty($value) && !is_array($value)) {
                 $parts = explode(",", $value);
-                if(in_array($newId, $parts)) {
+                if (in_array($newId, $parts)) {
                     $fieldname = $key;
                     break;
                 }
             }
         }
-        if(!empty($fieldname)) {
+        if (!empty($fieldname)) {
             $newQueueItem = new QueueItem();
             $newQueueItem->setPid((int) $this->extConf['storagePid']);
             $newQueueItem->setFieldname($fieldname);
@@ -201,13 +145,7 @@ class WebmConverterService
         return false;
     }
 
-    /**
-     * @param array $fieldArray
-     * @param DataHandler $pObj
-     * @param string $newId
-     * @return void
-     */
-    public function handleVideoConvertion(array &$fieldArray, DataHandler $pObj, string $newId): void
+    public function handleVideoConversion(array &$fieldArray, DataHandler $pObj, string $newId): void
     {
         try {
             $file = $this->getVideoFileByUid((int) $fieldArray['uid_local']);
@@ -215,22 +153,22 @@ class WebmConverterService
             /**
              * file is a video and has not the mime type video/webm
              */
-            if(!empty($file) && $file->getMimeType() !== 'video/webm' && in_array($file->getMimeType(), $this->getSupportedMimeTypes())) {
+            if ($file->getMimeType() !== 'video/webm' && in_array($file->getMimeType(), $this->getSupportedMimeTypes())) {
 
                 /**
                  * wrap detection of webm file with a try-catch block to handle InvalidArgumentException
                  */
                 try {
                     $fileWebM = $this->getWebMFileByCombinedIdentifier($file);
-                } catch(\InvalidArgumentException $exception) {
+                } catch (\InvalidArgumentException $exception) {
                     $fileWebM = null;
                 }
 
                 /**
                  * file with mime type video/webm does not exist or file does not exist in file system --> create video with mime type video/webm or add it to queue
                  */
-                if(empty($fileWebM) || !file_exists($this->getAbsoluteFilePathWebM($file))) {
-                    if($this->convertOnSave()) {
+                if (empty($fileWebM) || !file_exists($this->getAbsoluteFilePathWebM($file))) {
+                    if ($this->convertOnSave()) {
                         $fileWebM = $this->convertVideoToWebM($file);
                         /**
                          * set uid of new created webm sys file for storing sys_file_reference in content element
@@ -239,7 +177,7 @@ class WebmConverterService
                         $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.convertionSuccessful', 'webm'), ContextualFeedbackSeverity::OK);
 
                     } else {
-                        if($this->addVideoToQueue($file, $pObj->datamap, $newId, $pObj->substNEWwithIDs)) {
+                        if ($this->addVideoToQueue($file, $pObj->datamap, $newId, $pObj->substNEWwithIDs)) {
                             $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.addVideoToQueueSuccessful', 'webm'), ContextualFeedbackSeverity::OK);
                         }
                     }
@@ -260,31 +198,29 @@ class WebmConverterService
         }
     }
 
+
     /**
-     * @return void
+     * @throws IllegalObjectTypeException
      * @throws FileDoesNotExistException
+     * @throws UnknownObjectException
      */
-    public function processVideoQueue() {
+    public function processVideoQueue(): void
+    {
         $queueItems = $this->queueItemRepository->findByStatus(0);
 
-        /** @var QueueItem $queueItem */
         foreach ($queueItems as $queueItem) {
             try {
                 $processVideo = true;
                 $file = $this->getVideoFileByUid($queueItem->getSysFileUid());
-                if(empty($file)) {
-                    $processVideo = false;
-                    $this->updateQueueItem($queueItem, 1);
-                }
-                if($processVideo && !in_array($file->getMimeType(), $this->getSupportedMimeTypes())) {
+                if (!in_array($file->getMimeType(), $this->getSupportedMimeTypes())) {
                     $processVideo = false;
                     $this->updateQueueItem($queueItem, 2);
                 }
-                if($processVideo && $this->extConf['maxVideoFileSize'] > 0 && $file->getSize() > $this->extConf['maxVideoFileSize'] * self::BYTES) {
+                if ($processVideo && $this->extConf['maxVideoFileSize'] > 0 && $file->getSize() > $this->extConf['maxVideoFileSize'] * self::BYTES) {
                     $processVideo = false;
                     $this->updateQueueItem($queueItem, 3);
                 }
-                if($processVideo) {
+                if ($processVideo) {
                     $fileWebM = $this->convertVideoToWebM($file);
                     $this->updateSysFileReference($fileWebM->getUid(), $queueItem);
                     $this->updateQueueItem($queueItem, 4);
@@ -306,13 +242,11 @@ class WebmConverterService
     }
 
     /**
-     * @param QueueItem $queueItem
-     * @param int $status
-     * @return void
-     * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
+     * @throws IllegalObjectTypeException
      */
-    private function updateQueueItem($queueItem, $status) {
+    private function updateQueueItem($queueItem, $status): void
+    {
         // hide and update current queue item in any case
         $queueItem->setStatus($status);
         $queueItem->setHidden(1);
@@ -320,15 +254,9 @@ class WebmConverterService
         $this->persistenceManager->persistAll();
     }
 
-    /**
-     * @param int $fileWebMUid
-     * @param QueueItem $queueItem
-     * @return void
-     */
-    private function updateSysFileReference($fileWebMUid, $queueItem) {
-        /** @var FileRepository $fileRepository */
-        $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
-        $fileObjects = $fileRepository->findByRelation($queueItem->getTablenames(), $queueItem->getFieldname(), $queueItem->getUidForeign());
+    private function updateSysFileReference($fileWebMUid, $queueItem): void
+    {
+        $fileObjects = $this->fileRepository->findByRelation($queueItem->getTablenames(), $queueItem->getFieldname(), $queueItem->getUidForeign());
 
         $data = [];
         /**
@@ -336,7 +264,7 @@ class WebmConverterService
          * add the relevant date to data array
          */
         foreach ($fileObjects as $fileObject) {
-            if($fileObject->getOriginalFile()->getUid() === $queueItem->getSysFileUid()) {
+            if ($fileObject->getOriginalFile()->getUid() === $queueItem->getSysFileUid()) {
                 $data['sys_file_reference'][$fileObject->getUid()] = [
                     'uid_local' => $fileWebMUid
                 ];
@@ -344,7 +272,7 @@ class WebmConverterService
         }
 
         /**
-         * initalize backend user for command line interface and DataHandler
+         * initialize backend user for command line interface and DataHandler
          * update the relevant sys_file_references
          */
         Bootstrap::initializeBackendAuthentication();
@@ -360,8 +288,10 @@ class WebmConverterService
         $dataHandler->clear_cacheCmd('all');
     }
 
-    private function addFlashMessage(string $messageText, string $messageHeader, ContextualFeedbackSeverity $severity): void {
-        $message = GeneralUtility::makeInstance(FlashMessage::class,
+    private function addFlashMessage(string $messageText, string $messageHeader, ContextualFeedbackSeverity $severity): void
+    {
+        $message = GeneralUtility::makeInstance(
+            FlashMessage::class,
             $messageText,
             $messageHeader,
             $severity,

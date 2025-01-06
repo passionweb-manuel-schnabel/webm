@@ -1,4 +1,5 @@
 <?php
+
 namespace Passionweb\Webm\Command;
 
 use Passionweb\Webm\Service\WebmConverterService;
@@ -12,39 +13,30 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class WebmConverterCommand extends Command
 {
-    /**
-     * Configure the command by defining the name, options and arguments
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Converts video files in queue into webM format');
     }
 
-    /**
-     * Executes the command for convertion of videos in queue
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title($this->getDescription());
 
         try {
-            $io->writeln('Start convertion of videos in queue');
+            $io->writeln('Start conversion of videos in queue');
 
             $webMConverterService = GeneralUtility::makeInstance(WebmConverterService::class);
             $webMConverterService->processVideoQueue();
 
-            $io->success('Convertion of videos in queue finished successfully');
+            $io->success('Conversion of videos in queue finished successfully');
 
             return Command::SUCCESS;
         } catch (Exception $e) {
             $logger = GeneralUtility::makeInstance(LogManager::class)->getLogger(__CLASS__);
             $logger->error($e->getMessage());
 
-            $io->error('Convertion of videos in queue failed with following output:');
+            $io->error('Conversion of videos in queue failed with following output:');
             $io->writeln($e->getMessage());
 
             return Command::FAILURE;

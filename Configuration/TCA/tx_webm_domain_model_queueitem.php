@@ -1,4 +1,5 @@
 <?php
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem',
@@ -16,7 +17,7 @@ return [
             'endtime' => 'endtime',
         ],
         'searchFields' => 'status,tablenames,fieldname,sys_file_uid',
-        'iconfile' => 'EXT:webm/Resources/Public/Icons/tx_webm_domain_model_queueitem.gif'
+        'iconfile' => 'EXT:webm/Resources/Public/Icons/Extension.svg',
     ],
     'types' => [
         '1' => ['showitem' => 'status,tablenames,fieldname,uid_foreign,sys_file_uid, --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, hidden,'],
@@ -60,16 +61,8 @@ return [
                 'items' => [
                     [
                         'label' => 0,
-                        'value' => '',
+                        'invertStateDisplay' => true
                     ],
-                    [
-                        'label' => 1,
-                        'value' => '',
-                    ],
-                    [
-                        'label' => 'invertStateDisplay',
-                        'value' => true
-                    ]
                 ],
             ],
         ],
