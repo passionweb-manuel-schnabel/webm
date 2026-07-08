@@ -87,6 +87,10 @@
                 <source>An unexpected error occurred. Please check the log entries for more detailed information.</source>
                 <target>Ein unerwarteter Fehler ist aufgetreten. Bitte überprüfe die Log-Einträge für genauere Informationen.</target>
             </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.binaryNotFound" resname="tx_webm_domain_model_queueitem.binaryNotFound">
+                <source>The FFmpeg/FFprobe executable could not be found. Install ffmpeg on the server or configure its path (ffmpegPath / ffprobePath) in the extension settings.</source>
+                <target>Die FFmpeg-/FFprobe-Anwendung konnte nicht gefunden werden. Installiere ffmpeg auf dem Server oder hinterlege den Pfad (ffmpegPath / ffprobePath) in den Extension-Einstellungen.</target>
+            </trans-unit>
             <trans-unit id="tx_webm_domain_model_queueitem.taskTitle" resname="tx_webm_domain_model_queueitem.taskTitle">
                 <source>Converts video files in queue into webM format</source>
                 <target>Konvertiert Videodateien in der Warteschlange in das webM-Format</target>
@@ -106,6 +110,18 @@
             <trans-unit id="extConf.storageFolder" resname="extConf.storageFolder">
                 <source>Save queue items in this folder/storage</source>
                 <target>Queue-Items in diesem Ordner/Storage speichern</target>
+            </trans-unit>
+            <trans-unit id="extConf.ffmpegPath" resname="extConf.ffmpegPath">
+                <source>Path to the ffmpeg binary (leave empty to auto-detect it on the system PATH)</source>
+                <target>Pfad zur ffmpeg-Anwendung (leer lassen, um sie automatisch über den System-PATH zu finden)</target>
+            </trans-unit>
+            <trans-unit id="extConf.ffprobePath" resname="extConf.ffprobePath">
+                <source>Path to the ffprobe binary (leave empty to auto-detect it on the system PATH)</source>
+                <target>Pfad zur ffprobe-Anwendung (leer lassen, um sie automatisch über den System-PATH zu finden)</target>
+            </trans-unit>
+            <trans-unit id="extConf.conversionTimeout" resname="extConf.conversionTimeout">
+                <source>Timeout in seconds for a single conversion process (default 3600)</source>
+                <target>Timeout in Sekunden für einen einzelnen Konvertierungsvorgang (Standard 3600)</target>
             </trans-unit>
 		</body>
 	</file>

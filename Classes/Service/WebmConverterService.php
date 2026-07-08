@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Passionweb\Webm\Service;
 
+use FFMpeg\Exception\ExecutableNotFoundException;
 use FFMpeg\Exception\RuntimeException;
 use FFMpeg\FFMpeg;
 use FFMpeg\Format\Video\WebM;
@@ -36,7 +37,11 @@ class WebmConverterService
 {
     protected const BYTES = 1024 * 1024;
 
+    protected const DEFAULT_TIMEOUT = 3600;
+
     protected array $extConf = [];
+
+    protected ?FFMpeg $ffmpeg = null;
 
     /**
      * @throws ExtensionConfigurationPathDoesNotExistException
@@ -99,10 +104,43 @@ class WebmConverterService
 
     public function convertVideoToWebM(File $originalVideoFile): ?File
     {
-        $ffmpeg = FFMpeg::create();
-        $video = $ffmpeg->open($this->getAbsoluteFileStoragePath($originalVideoFile) . $originalVideoFile->getIdentifier());
+        $video = $this->getFFMpeg()->open($this->getAbsoluteFileStoragePath($originalVideoFile) . $originalVideoFile->getIdentifier());
         $video->save(new WebM(), $this->getAbsoluteFilePathWebM($originalVideoFile));
         return $this->resourceFactory->getFileObjectFromCombinedIdentifier($this->getCombinedFilePathWebM($originalVideoFile));
+    }
+
+    /**
+     * Lazily create a configured FFMpeg instance. Creation already probes the
+     * binaries, so a missing ffmpeg/ffprobe surfaces here as an
+     * ExecutableNotFoundException.
+     *
+     * @throws ExecutableNotFoundException
+     */
+    protected function getFFMpeg(): FFMpeg
+    {
+        if ($this->ffmpeg === null) {
+            $this->ffmpeg = FFMpeg::create($this->getFFMpegConfiguration(), $this->logger);
+        }
+        return $this->ffmpeg;
+    }
+
+    /**
+     * Build the php-ffmpeg configuration from the extension configuration.
+     * Binary paths are only set when configured; otherwise php-ffmpeg
+     * auto-detects ffmpeg/ffprobe on the system PATH.
+     */
+    protected function getFFMpegConfiguration(): array
+    {
+        $configuration = [
+            'timeout' => (int) ($this->extConf['conversionTimeout'] ?? self::DEFAULT_TIMEOUT) ?: self::DEFAULT_TIMEOUT,
+        ];
+        if (!empty($this->extConf['ffmpegPath'])) {
+            $configuration['ffmpeg.binaries'] = $this->extConf['ffmpegPath'];
+        }
+        if (!empty($this->extConf['ffprobePath'])) {
+            $configuration['ffprobe.binaries'] = $this->extConf['ffprobePath'];
+        }
+        return $configuration;
     }
 
     /**
@@ -189,6 +227,9 @@ class WebmConverterService
         } catch (IllegalObjectTypeException $e) {
             $this->logger->error($e->getMessage());
             $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.videoNotAddedToQueue', 'webm'), ContextualFeedbackSeverity::ERROR);
+        } catch (ExecutableNotFoundException $e) {
+            $this->logger->error($e->getMessage());
+            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.binaryNotFound', 'webm'), ContextualFeedbackSeverity::ERROR);
         } catch (RuntimeException $e) {
             $this->logger->error($e->getMessage());
             $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.errorConvertingVideo', 'webm'), ContextualFeedbackSeverity::ERROR);
@@ -206,6 +247,16 @@ class WebmConverterService
      */
     public function processVideoQueue(): void
     {
+        try {
+            // Fail fast with a clear message if the binaries are missing,
+            // instead of marking every queue item as failed one by one.
+            $this->getFFMpeg();
+        } catch (ExecutableNotFoundException $e) {
+            $message = LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.binaryNotFound', 'webm');
+            $this->logger->error($message, ['exception' => $e]);
+            throw new Exception($message, 1720000000);
+        }
+
         $queueItems = $this->queueItemRepository->findByStatus(0);
 
         foreach ($queueItems as $queueItem) {

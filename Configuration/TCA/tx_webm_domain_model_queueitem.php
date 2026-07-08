@@ -16,7 +16,6 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'status,tablenames,fieldname,sys_file_uid',
         'iconfile' => 'EXT:webm/Resources/Public/Icons/Extension.svg',
     ],
     'types' => [
@@ -73,6 +72,7 @@ return [
                 'type' => 'datetime',
                 'format' => 'date',
                 'default' => 0,
+                'searchable' => false,
                 'behaviour' => [
                     'allowLanguageSynchronization' => true
                 ]
@@ -85,6 +85,7 @@ return [
                 'type' => 'datetime',
                 'format' => 'date',
                 'default' => 0,
+                'searchable' => false,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
                 ],

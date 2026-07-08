@@ -6,6 +6,7 @@ namespace Passionweb\Webm\Domain\Repository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class QueueItemRepository extends Repository
@@ -16,5 +17,10 @@ class QueueItemRepository extends Repository
         $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
         $querySettings->setRespectStoragePage(false);
         $this->setDefaultQuerySettings($querySettings);
+    }
+
+    public function findByStatus(int $status): QueryResultInterface
+    {
+        return $this->findBy(['status' => $status]);
     }
 }
