@@ -66,6 +66,9 @@
             <trans-unit id="tx_webm_domain_model_queueitem.unexpectedError" resname="tx_webm_domain_model_queueitem.unexpectedError">
                 <source>An unexpected error occurred. Please check the log entries for more detailed information.</source>
             </trans-unit>
+            <trans-unit id="tx_webm_domain_model_queueitem.binaryNotFound" resname="tx_webm_domain_model_queueitem.binaryNotFound">
+                <source>The FFmpeg/FFprobe executable could not be found. Install ffmpeg on the server or configure its path (ffmpegPath / ffprobePath) in the extension settings.</source>
+            </trans-unit>
             <trans-unit id="tx_webm_domain_model_queueitem.taskTitle" resname="tx_webm_domain_model_queueitem.taskTitle">
                 <source>Converts video files in queue into webM format</source>
             </trans-unit>
@@ -80,6 +83,15 @@
             </trans-unit>
             <trans-unit id="extConf.storageFolder" resname="extConf.storageFolder">
                 <source>Save queue items in this folder/storage</source>
+            </trans-unit>
+            <trans-unit id="extConf.ffmpegPath" resname="extConf.ffmpegPath">
+                <source>Path to the ffmpeg binary (leave empty to auto-detect it on the system PATH)</source>
+            </trans-unit>
+            <trans-unit id="extConf.ffprobePath" resname="extConf.ffprobePath">
+                <source>Path to the ffprobe binary (leave empty to auto-detect it on the system PATH)</source>
+            </trans-unit>
+            <trans-unit id="extConf.conversionTimeout" resname="extConf.conversionTimeout">
+                <source>Timeout in seconds for a single conversion process (default 3600)</source>
             </trans-unit>
 		</body>
 	</file>

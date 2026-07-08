@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Passionweb\Webm\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class QueueItem extends AbstractEntity
@@ -74,5 +75,22 @@ class QueueItem extends AbstractEntity
     public function setStatus(int $status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * Language of the sys_file_reference this queue item was created for.
+     *
+     * Backed by Extbase's language field (_languageUid), which maps to the
+     * sys_language_uid column. It is used to update only the file reference of
+     * the matching language when the WebM version replaces the original video.
+     */
+    public function getSysLanguageUid(): int
+    {
+        return (int)$this->_getProperty(AbstractDomainObject::PROPERTY_LANGUAGE_UID);
+    }
+
+    public function setSysLanguageUid(int $sysLanguageUid): void
+    {
+        $this->_setProperty(AbstractDomainObject::PROPERTY_LANGUAGE_UID, $sysLanguageUid);
     }
 }

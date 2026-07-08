@@ -6,3 +6,9 @@ mimeTypes = video/mp4,video/ogg,video/x-m4v,application/ogg
 maxVideoFileSize = 0
 # cat=basic; type=int+; label=LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:extConf.storageFolder
 storagePid = 0
+# cat=binaries; type=string; label=LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:extConf.ffmpegPath
+ffmpegPath =
+# cat=binaries; type=string; label=LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:extConf.ffprobePath
+ffprobePath =
+# cat=binaries; type=int+; label=LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:extConf.conversionTimeout
+conversionTimeout = 3600

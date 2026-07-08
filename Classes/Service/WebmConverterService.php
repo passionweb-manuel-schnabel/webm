@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Passionweb\Webm\Service;
 
+use FFMpeg\Exception\ExecutableNotFoundException;
 use FFMpeg\Exception\RuntimeException;
 use FFMpeg\FFMpeg;
 use FFMpeg\Format\Video\WebM;
@@ -15,6 +16,7 @@ use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExis
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -36,7 +38,11 @@ class WebmConverterService
 {
     protected const BYTES = 1024 * 1024;
 
+    protected const DEFAULT_TIMEOUT = 3600;
+
     protected array $extConf = [];
+
+    protected ?FFMpeg $ffmpeg = null;
 
     /**
      * @throws ExtensionConfigurationPathDoesNotExistException
@@ -99,16 +105,37 @@ class WebmConverterService
 
     public function convertVideoToWebM(File $originalVideoFile): ?File
     {
-        $ffmpeg = FFMpeg::create();
-        $video = $ffmpeg->open($this->getAbsoluteFileStoragePath($originalVideoFile) . $originalVideoFile->getIdentifier());
+        $video = $this->getFFMpeg()->open($this->getAbsoluteFileStoragePath($originalVideoFile) . $originalVideoFile->getIdentifier());
         $video->save(new WebM(), $this->getAbsoluteFilePathWebM($originalVideoFile));
         return $this->resourceFactory->getFileObjectFromCombinedIdentifier($this->getCombinedFilePathWebM($originalVideoFile));
+    }
+
+    protected function getFFMpeg(): FFMpeg
+    {
+        if ($this->ffmpeg === null) {
+            $this->ffmpeg = FFMpeg::create($this->getFFMpegConfiguration(), $this->logger);
+        }
+        return $this->ffmpeg;
+    }
+
+    protected function getFFMpegConfiguration(): array
+    {
+        $configuration = [
+            'timeout' => (int) ($this->extConf['conversionTimeout'] ?? self::DEFAULT_TIMEOUT) ?: self::DEFAULT_TIMEOUT,
+        ];
+        if (!empty($this->extConf['ffmpegPath'])) {
+            $configuration['ffmpeg.binaries'] = $this->extConf['ffmpegPath'];
+        }
+        if (!empty($this->extConf['ffprobePath'])) {
+            $configuration['ffprobe.binaries'] = $this->extConf['ffprobePath'];
+        }
+        return $configuration;
     }
 
     /**
      * @throws IllegalObjectTypeException
      */
-    public function addVideoToQueue(File $originalVideoFile, array $datamap, string $newId, array $substNEWwithIDs): bool
+    public function addVideoToQueue(File $originalVideoFile, array $datamap, string $newId, array $substNEWwithIDs, int $sysLanguageUid = 0): bool
     {
         $tablenames = array_key_first($datamap);
         $fieldname = '';
@@ -137,9 +164,25 @@ class WebmConverterService
             $newQueueItem->setTablenames($tablenames);
             $newQueueItem->setUidForeign($uidForeign);
             $newQueueItem->setSysFileUid($originalVideoFile->getUid());
+            $newQueueItem->setSysLanguageUid($sysLanguageUid);
 
             $this->queueItemRepository->add($newQueueItem);
             $this->persistenceManager->persistAll();
+
+            /**
+             * Extbase does not persist a non-zero language field on INSERT
+             * (see Persistence\Generic\Backend::insertObject), so the reference
+             * language is written explicitly after the record has been created.
+             */
+            if ($sysLanguageUid !== 0) {
+                GeneralUtility::makeInstance(ConnectionPool::class)
+                    ->getConnectionForTable('tx_webm_domain_model_queueitem')
+                    ->update(
+                        'tx_webm_domain_model_queueitem',
+                        ['sys_language_uid' => $sysLanguageUid],
+                        ['uid' => $newQueueItem->getUid()]
+                    );
+            }
             return true;
         }
         return false;
@@ -177,7 +220,7 @@ class WebmConverterService
                         $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.convertionSuccessful', 'webm'), ContextualFeedbackSeverity::OK);
 
                     } else {
-                        if ($this->addVideoToQueue($file, $pObj->datamap, $newId, $pObj->substNEWwithIDs)) {
+                        if ($this->addVideoToQueue($file, $pObj->datamap, $newId, $pObj->substNEWwithIDs, (int)($fieldArray['sys_language_uid'] ?? 0))) {
                             $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.addVideoToQueueSuccessful', 'webm'), ContextualFeedbackSeverity::OK);
                         }
                     }
@@ -189,6 +232,9 @@ class WebmConverterService
         } catch (IllegalObjectTypeException $e) {
             $this->logger->error($e->getMessage());
             $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.videoNotAddedToQueue', 'webm'), ContextualFeedbackSeverity::ERROR);
+        } catch (ExecutableNotFoundException $e) {
+            $this->logger->error($e->getMessage());
+            $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.binaryNotFound', 'webm'), ContextualFeedbackSeverity::ERROR);
         } catch (RuntimeException $e) {
             $this->logger->error($e->getMessage());
             $this->addFlashMessage('', LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.errorConvertingVideo', 'webm'), ContextualFeedbackSeverity::ERROR);
@@ -206,6 +252,14 @@ class WebmConverterService
      */
     public function processVideoQueue(): void
     {
+        try {
+            $this->getFFMpeg();
+        } catch (ExecutableNotFoundException $e) {
+            $message = LocalizationUtility::translate('LLL:EXT:webm/Resources/Private/Language/locallang_db.xlf:tx_webm_domain_model_queueitem.binaryNotFound', 'webm');
+            $this->logger->error($message, ['exception' => $e]);
+            throw new Exception($message, 1720000000);
+        }
+
         $queueItems = $this->queueItemRepository->findByStatus(0);
 
         foreach ($queueItems as $queueItem) {
@@ -262,8 +316,16 @@ class WebmConverterService
         /**
          * loop through relations and check if current original video is in use
          * add the relevant date to data array
+         *
+         * findByRelation() only matches uid_foreign/tablenames/fieldname (see
+         * FileRepository::findByRelation), so references of other languages that
+         * share the same relation would be updated as well. Restrict the update
+         * to the language the queue item was created for.
          */
         foreach ($fileObjects as $fileObject) {
+            if ((int)$fileObject->getReferenceProperty('sys_language_uid') !== $queueItem->getSysLanguageUid()) {
+                continue;
+            }
             if ($fileObject->getOriginalFile()->getUid() === $queueItem->getSysFileUid()) {
                 $data['sys_file_reference'][$fileObject->getUid()] = [
                     'uid_local' => $fileWebMUid

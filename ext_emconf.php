@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = [
+$EM_CONF['webm'] = [
     'title' => 'WebM copies of videos',
     'description' => 'Creates a WebM file for every configured (and supported) video format. Either via Symfony command or hook (can be configured).',
     'category' => 'misc',
@@ -9,9 +9,9 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'PassionWeb Manuel Schnabel',
     'state' => 'stable',
     'clearCacheOnLoad' => true,
-    'version' => '3.0.0',
+    'version' => '4.0.0',
     'constraints' => [
-        'depends' => ['typo3' => '13.0.0-13.4.99'],
+        'depends' => ['typo3' => '14.0.0-14.3.99'],
         'conflicts' => [],
         'suggests' => [],
     ],
