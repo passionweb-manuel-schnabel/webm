@@ -8,5 +8,5 @@
                project-issues="https://github.com/passionweb-manuel-schnabel/webm/issues" edit-on-github-branch="latest"
                edit-on-github="passionweb-manuel-schnabel/webm" typo3-core-preferred="stable"
                interlink-shortcode="passionweb/webm"/>
-    <project title="WebM" release="2.1.2" version="2.1" copyright="2024"/>
+    <project title="WebM" release="4.0.1" version="4.0" copyright="2024"/>
 </guides>

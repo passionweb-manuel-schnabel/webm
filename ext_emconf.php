@@ -9,7 +9,7 @@ $EM_CONF['webm'] = [
     'author_company' => 'PassionWeb Manuel Schnabel',
     'state' => 'stable',
     'clearCacheOnLoad' => true,
-    'version' => '4.0.0',
+    'version' => '4.0.1',
     'constraints' => [
         'depends' => ['typo3' => '14.0.0-14.3.99'],
         'conflicts' => [],
